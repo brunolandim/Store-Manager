@@ -22,9 +22,21 @@ const getById = async (req, res, next) => {
     } catch (e) {
         next(e);
     }
-}; 
+};
+
+const createSale = async (req, res, next) => {
+    const { name, quantity } = req.body;
+    try {
+        const newSale = await SaleService.create(name, quantity);
+
+        return res.status(200).json(newSale);
+    } catch (e) {
+        next(e);
+    }
+};
 
 module.exports = {
     list,
     getById,
+    createSale,
 };

@@ -21,7 +21,21 @@ WHERE sale_id = ?`, [id]);
     return result;
 };
 
+const create = async (name, quantity) => {
+    const [result] = await connection.execute(`
+    INSERT INTO StoreManager.products(name,quantity)Values(?,?) ;`,
+    [name, quantity]);
+
+    const newObj = {
+        id: result.insertId,
+        name,
+        quantity,
+    };
+    return newObj;
+};
+
 module.exports = {
     getAll,
     getById,
+    create,
 };
