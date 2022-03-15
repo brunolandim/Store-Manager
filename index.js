@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.get('/products', Products.list);
 app.get('/products/:id', Products.getById);
-app.post('/products', validateName, validateQuantity);
+app.post('/products', Products.createProduct, validateName, validateQuantity);
 app.put('/products/:id', validateName, validateQuantity);
 
 app.get('/sales', Sales.list);
