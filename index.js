@@ -19,6 +19,7 @@ app.get('/products', Products.list);
 app.get('/products/:id', Products.getById);
 app.post('/products', Products.createProduct, validateName, validateQuantity);
 app.put('/products/:id', validateName, validateQuantity);
+app.delete('/products/:id', Products.deleteProduct);
 
 app.get('/sales', Sales.list);
 app.get('/sales/:id', Sales.getById);
