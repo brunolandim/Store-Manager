@@ -24,6 +24,12 @@ const create = async (name, quantity) => {
     return newProduct;
 };
 
+const updateProduct = async (id, name, quantity) => {
+    const productUpdate = await productsModel.update(id, name, quantity);
+
+    return productUpdate;
+};
+
 const deleteProductId = async (id) => {
     const deleteProduct = await productsModel.deleteProduct(id);
     
@@ -36,5 +42,6 @@ module.exports = {
     getAll,
     getById,
     create,
+    updateProduct,
     deleteProductId,
 };
