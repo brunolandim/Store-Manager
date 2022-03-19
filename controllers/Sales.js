@@ -34,6 +34,25 @@ const createSale = async (req, res, next) => {
         next(e);
     }
 };
+const updateSale = async (req, res, next) => {
+    const { id } = req.params;
+    const [{ productId, quantity }] = req.body;
+
+    try {
+        const idSale = await SaleService.getById(id);
+        if (!idSale) res.status(400).json({ message: 'Sale not found' });
+
+        await SaleService.updateSale(id, productId, quantity);
+
+        const updatedSaleObj = {
+            saleId: id,
+            itemUpdated: [{ productId, quantity }],
+        };
+        res.status(200).json(updatedSaleObj);
+    } catch (e) {
+        next(e);
+    }
+};
 
 const excludeSale = async (req, res, next) => {
     const { id } = req.params;
@@ -54,5 +73,6 @@ module.exports = {
     list,
     getById,
     createSale,
+    updateSale,
     excludeSale,
 };

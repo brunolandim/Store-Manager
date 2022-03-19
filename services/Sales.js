@@ -28,6 +28,11 @@ const createSaleService = async (sales) => {
         itemsSold: sales,
     };
 };
+const updateSale = async (saleId, productId, quantity) => {
+    const saleUpdate = await salesModel.update(saleId, productId, quantity);
+
+    return saleUpdate;
+};
 
 const excludeSale = async (id) => {
     const result = await salesModel.exclude(id);
@@ -40,6 +45,7 @@ const excludeSale = async (id) => {
 module.exports = {
     getAll,
     getById,
+    updateSale,
     createSaleService,
     excludeSale,
 };

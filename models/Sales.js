@@ -40,10 +40,20 @@ const exclude = async (id) => {
     await connection.execute('DELETE FROM StoreManager.sales WHERE id = ?;', [id]);
 };
 
+const update = async (saleId, productId, quantity) => {
+    const [result] = await connection.execute(
+        `
+        UPDATE StoreManager.sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?;
+        `, [productId, quantity, saleId],
+    );
+        return result;
+    };
+
 module.exports = {
     getAll,
     getById,
     createSale,
     createSaleProduct,
+    update,
     exclude,
 };
