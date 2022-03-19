@@ -29,15 +29,11 @@ const createSale = async () => {
 };
 
 const createSaleProduct = async (saleId, productId, quantity) => {
-    await connection.execute(`
+    const [result] = await connection.execute(`
     INSERT INTO StoreManager.sales (sale_id, product_id, quantity)Values(?,?,?) ;`,
     [saleId, productId, quantity]);
 
-    const newSale = {
-        productId, 
-        quantity,
-    };
-    return newSale;
+    return result;
 };
 
 const exclude = async (id) => {
