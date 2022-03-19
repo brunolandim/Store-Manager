@@ -20,22 +20,34 @@ WHERE sale_id = ?`, [id]);
 
     return result;
 };
-
-const create = async (name, quantity) => {
+const createSale = async () => {
     const [result] = await connection.execute(`
-    INSERT INTO StoreManager.products(name,quantity)Values(?,?) ;`,
-    [name, quantity]);
+    INSERT INTO StoreManager.sales (date) VALUES(NOW());
+    `);
+    
+    return result.insertId;
+};
 
-    const newObj = {
-        id: result.insertId,
-        name,
+const createSaleProduct = async (saleId, productId, quantity) => {
+    await connection.execute(`
+    INSERT INTO StoreManager.sales (sale_id, product_id, quantity)Values(?,?,?) ;`,
+    [saleId, productId, quantity]);
+
+    const newSale = {
+        productId, 
         quantity,
     };
-    return newObj;
+    return newSale;
+};
+
+const exclude = async (id) => {
+    await connection.execute('DELETE FROM StoreManager.sales WHERE id = ?;', [id]);
 };
 
 module.exports = {
     getAll,
     getById,
-    create,
+    createSale,
+    createSaleProduct,
+    exclude,
 };

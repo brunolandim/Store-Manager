@@ -56,7 +56,7 @@ const deleteProduct = async (req, res, next) => {
   const { id } = req.params;
   try {
         const productId = await productsService.getById(id);
-        if (!productId) res.status(404).json({ message: 'Product not found' });
+        if (!productId) return res.status(404).json({ message: 'Product not found' });
 
         await productsService.deleteProductId(id);
         return res.status(204).end();

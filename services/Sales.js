@@ -14,16 +14,32 @@ const getById = async (id) => {
     return result;
 };
 
-const create = async (name, quantity) => {
-    const result = await salesModel.create(name, quantity);
+const createSaleService = async (sales) => {
+    const saleId = await salesModel.createSale();
+
+    if (!saleId) return null;
+
+    sales.forEach(async (sale) => {
+        await salesModel.createSaleProduct(saleId, sale.productId, sale.quantity);
+    });
+
+    return {
+        id: saleId,
+        itemsSold: sales,
+    };
+};
+
+const excludeSale = async (id) => {
+    const result = await salesModel.exclude(id);
 
     if (!result) return null;
-    
+
     return result;
 };
 
 module.exports = {
     getAll,
     getById,
-    create,
+    createSaleService,
+    excludeSale,
 };

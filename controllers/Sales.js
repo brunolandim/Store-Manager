@@ -25,11 +25,26 @@ const getById = async (req, res, next) => {
 };
 
 const createSale = async (req, res, next) => {
-    const { name, quantity } = req.body;
+    const sales = req.body;
     try {
-        const newSale = await SaleService.create(name, quantity);
+        const newSale = await SaleService.createSaleService(sales);
 
-        return res.status(200).json(newSale);
+        return res.status(201).json(newSale);
+    } catch (e) {
+        next(e);
+    }
+};
+
+const excludeSale = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const SaleId = await SaleService.getById(id);
+        if (!SaleId || SaleId.length === 0) { 
+            return res.status(404).json({ message: 'Sale not found' }); 
+    }
+
+        await SaleService.excludeSale(id);
+        return res.status(204).end();
     } catch (e) {
         next(e);
     }
@@ -39,4 +54,5 @@ module.exports = {
     list,
     getById,
     createSale,
+    excludeSale,
 };
