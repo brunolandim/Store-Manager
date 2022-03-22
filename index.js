@@ -24,8 +24,7 @@ app.delete('/products/:id', Products.deleteProduct);
 
 app.get('/sales', Sales.list);
 app.get('/sales/:id', Sales.getById);
-app.post('/sales', 
-validadeProductIdSale, 
+app.post('/sales', validadeProductIdSale, 
 validadeQuantitySale, 
 validationQuantity, 
 Sales.createSale);
