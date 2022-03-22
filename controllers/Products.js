@@ -4,7 +4,7 @@ const list = async (__req, res, next) => {
    try {
     const products = await productsService.getAll();
     
-    res.status(200).json(products);
+   return res.status(200).json(products);
    } catch (e) {
        next(e);
    }

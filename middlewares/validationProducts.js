@@ -17,7 +17,6 @@ const validateQuantity = (req, res, next) => {
     }
     next();
 };
-
 module.exports = {
     validateName,
     validateQuantity,

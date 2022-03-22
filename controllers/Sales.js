@@ -4,7 +4,7 @@ const list = async (__req, res, next) => {
    try {
     const Sales = await SaleService.getAll();
     
-    res.status(200).json(Sales);
+   return res.status(200).json(Sales);
    } catch (e) {
        next(e);
    }
@@ -48,7 +48,7 @@ const updateSale = async (req, res, next) => {
             saleId: id,
             itemUpdated: [{ productId, quantity }],
         };
-        res.status(200).json(updatedSaleObj);
+       return res.status(200).json(updatedSaleObj);
     } catch (e) {
         next(e);
     }
