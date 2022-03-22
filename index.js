@@ -24,7 +24,11 @@ app.delete('/products/:id', Products.deleteProduct);
 
 app.get('/sales', Sales.list);
 app.get('/sales/:id', Sales.getById);
-app.post('/sales', validadeProductIdSale, validadeQuantitySale, validationQuantity, Sales.createSale);
+app.post('/sales', 
+validadeProductIdSale, 
+validadeQuantitySale, 
+validationQuantity, 
+Sales.createSale);
 app.put('/sales/:id', validadeProductIdSale, validadeQuantitySale, Sales.updateSale);
 app.delete('/sales/:id', Sales.excludeSale);
 
