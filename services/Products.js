@@ -38,10 +38,27 @@ const deleteProductId = async (id) => {
     return deleteProduct;
 };
 
+const validationQuantityLength = async (req, res, next) => {
+    const allProducts = await productsModel.getAll();
+  
+    const [resultMap] = req.body.map(({ productId, quantity }) => {
+      const find = allProducts.find((e) => e.id === productId);
+      
+      return find.quantity - quantity;
+    });
+  
+    if (resultMap < 0) {
+      return res.status(422).json({ message: 'Such amount is not permitted to sell' });
+    }
+  
+    next();
+  };
+
 module.exports = {
     getAll,
     getById,
     create,
     updateProduct,
     deleteProductId,
+    validationQuantityLength,
 };
