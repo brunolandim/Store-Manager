@@ -142,28 +142,20 @@ describe('Insere uma nova Sale no BD',() => {
 });
 describe('Atualiza um Sale do BD',() => {
     const result = [{
-        affectedRows: 1
-      }, {
-        "id": 4,
-        "name": "test",
-        "quantity": 5
-      }]
+        saleId:1,
+        productId:1, 
+        quantity:10, 
+    }]
     before(()=>{
-        sinon.stub(connection , 'execute').resolves([{
-            affectedRows: 1
-        }]);
+        sinon.stub(connection , 'execute').resolves(result);
     });
     after(() =>{
         connection.execute.restore();
     });
-    const id = 1;
-    const name = 'test';
-    const quantity = 5;
-
-    it('recebe a key "affectedRows" que indica quantas linhas foram alteradas', async () => {
-        const product = await saleModel.update(id,name,quantity)
-        console.log(product);
-        expect(product).to.be.deep.equal(result);
+    it('retorna um objeto que indica com as atualizações nos campos', async () => {
+        const product = await saleModel.update(result)
+        
+        expect(product).to.be.includes(result[0])
     });
 });
 describe('Deleta um produto do BD',() => {
