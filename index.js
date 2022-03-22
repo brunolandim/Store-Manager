@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Products = require('./controllers/Products');
 const Sales = require('./controllers/Sales');
+const validationQuantity = require('./middlewares/validationQuantity'); 
 const { validateName, validateQuantity } = require('./middlewares/validationProducts');
 const { validadeProductIdSale, validadeQuantitySale } = require('./middlewares/validationSale');
 
@@ -23,7 +24,7 @@ app.delete('/products/:id', Products.deleteProduct);
 
 app.get('/sales', Sales.list);
 app.get('/sales/:id', Sales.getById);
-app.post('/sales', validadeProductIdSale, validadeQuantitySale, Sales.createSale);
+app.post('/sales', validadeProductIdSale, validadeQuantitySale, validationQuantity, Sales.createSale);
 app.put('/sales/:id', validadeProductIdSale, validadeQuantitySale, Sales.updateSale);
 app.delete('/sales/:id', Sales.excludeSale);
 
