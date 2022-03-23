@@ -25,19 +25,15 @@ const getById = async (req, res, next) => {
 };
 
 const createSale = async (req, res, next) => {
+    const sales = req.body;
     try {
-      const [...products] = req.body;
-      const created = await SaleService.createSaleService(products);
-  
-      if (!created) {
-        return res.status(404).json({ message: 'Sale not found' });
-      }
-  
-      return res.status(201).json(created);
+        const newSale = await SaleService.createSaleService(sales);
+
+        return res.status(201).json(newSale);
     } catch (e) {
-      next(e);
+        next(e);
     }
-  };
+};
 
 const updateSale = async (req, res, next) => {
     const { id } = req.params;

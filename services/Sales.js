@@ -14,15 +14,20 @@ const getById = async (id) => {
     return result;
 };
 
-const createSaleService = (products) => salesModel.createSale().then((id) => {
-    products.forEach(({ productId, quantity }) => {
-      salesModel.createSaleProduct(id, productId, quantity);
+const createSaleService = async (sales) => {
+    const saleId = await salesModel.createSale();
+
+    if (!saleId) return null;
+
+    sales.forEach(async (sale) => {
+      await salesModel.createSaleProduct(saleId, sale.productId, sale.quantity);
     });
+
     return {
-      id,
-      itemsSold: products,
+        id: saleId,
+        itemsSold: sales,
     };
-  });
+};
 
 const updateSale = async (saleId, productId, quantity) => {
     const saleUpdate = await salesModel.update(saleId, productId, quantity);
