@@ -17,3 +17,17 @@ describe('Service getAll test',() => {
         expect(products).to.be.an('array')
     })
 })
+
+describe('Service getById test',() => {
+    before(()=>{
+        sinon.stub(productModel,'getById').resolves({id:1})
+    });
+    after(() => {
+        productModel.getById.restore()
+    })
+    describe('Retorna um array', async () => {
+        const products = await prodctService.getById(1);
+        console.log(products);
+        expect(products).to.have.property('id');
+    })
+})

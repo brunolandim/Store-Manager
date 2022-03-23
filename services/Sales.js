@@ -14,20 +14,16 @@ const getById = async (id) => {
     return result;
 };
 
-const createSaleService = async (sales) => {
-    const saleId = await salesModel.createSale();
-
-    if (!saleId) return null;
-
-    sales.forEach(async (sale) => {
-        await salesModel.createSaleProduct(saleId, sale.productId, sale.quantity);
+const createSaleService = (products) => salesModel.createSale().then((id) => {
+    products.forEach(({ productId, quantity }) => {
+      salesModel.createSaleProduct(id, productId, quantity);
     });
-
     return {
-        id: saleId,
-        itemsSold: sales,
+      id,
+      itemsSold: products,
     };
-};
+  });
+
 const updateSale = async (saleId, productId, quantity) => {
     const saleUpdate = await salesModel.update(saleId, productId, quantity);
 
